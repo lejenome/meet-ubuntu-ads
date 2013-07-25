@@ -667,7 +667,7 @@
             var _ =canvas.getContext('2d');
             var ccanvas=document.getElementById('gesture-comp');
             if (typeof(ccanvas) == 'undefined' || ccanvas == null){
-                ccanvas= document.createElement("video");
+                ccanvas= document.createElement("canvas");
                 ccanvas.id="gesture-comp";
                 document.body.appendChild(ccanvas);
             };
