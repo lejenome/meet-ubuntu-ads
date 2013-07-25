@@ -1,13 +1,15 @@
-$(function(){
+(function(){
     var imp = impress();
     imp.init();
-    $('#arrowLeft').click(function(e){
-        imp.prev();
-        e.preventDefault();
+    var el = document.querySelector('#arrowLeft');
+    el.addEventListener('click', function(e){
+            imp.prev();
+            e.preventDefault();
 
-    });	
-    $('#arrowRight').click(function(e){
+    },false);
+    el = document.querySelector('#arrowRight');
+    el.addEventListener('click', function(e){
         imp.next();
         e.preventDefault();
-    });
-});
+    },false);
+})();

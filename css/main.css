@@ -438,7 +438,7 @@ transform: translateX(-200%) translateY(300%) scale(2,2);
 #slide3.active div>span:first-child+div+span+div img{
     opacity:1;
     -webkit-transition: opacity 0s linear 9s,visibility 0s linear 11s;
-    -moz-transition: opacity 0s linear 9s,visibility 0s linear 11;
+    -moz-transition: opacity 0s linear 9s,visibility 0s linear 11s;
     -o-transition: opacity 0s linear 9s,visibility 0s linear 11s;
     transition: opacity 0s linear 9s,visibility 0s linear 11s;
     visibility:visible;
@@ -520,34 +520,34 @@ transform: translateX(-200%) translateY(300%) scale(2,2);
 
 @-webkit-keyframes so {
     0% { -webkit-transform-origin: 0 0;
-    -webkit-transform: tranlate(0,0);
+    -webkit-transform: translate(0,0);
 }
     100% { -webkit-transform-origin: 0 0;
-       -webkit-transform: tranlate(0,200px);
+       -webkit-transform: translate(0,200px);
 }
 }
 @-moz-keyframes so {
 from { -moz-transform-origin: 0 0;
-    -moz-transform: tranlateY(0); 
+    -moz-transform: translateY(0); 
 }
 to { -moz-transform-origin: 0 0; 
-     -moz-transform: tranlateY(200px);
+     -moz-transform: translateY(200px);
 }
 }
 @-o-keyframes so {
 from { -o-transform-origin: 0 0;
-    -o-transform: tranlateY(0); 
+    -o-transform: translateY(0); 
 }
 to { -o-transform-origin: 0 0; 
-     -o-transform: tranlateY(200px);
+     -o-transform: translateY(200px);
 }
 }
 @keyframes so {
 from { transform-origin: 0 0;
-    transform: tranlateY(0); 
+    transform: translateY(0); 
 }
 to { transform-origin: 0 0; 
-     transform: tranlateY(200px);
+     transform: translateY(200px);
 }
 }
 #slide4 h2{
@@ -751,7 +751,7 @@ left:500px;
     right:-170px;
 }
 #slide12 span{
-    line-height:1.;
+    line-height:1;
     font-size:18px;
     color:#ddd;
 }

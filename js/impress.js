@@ -31,6 +31,7 @@
     // The code is heavily inspired by Modernizr http://www.modernizr.com/
     var delay_el=null;
     var arrow=null;
+    var imp=document.getElementById("impress");
     var pfx = (function () {
         
         var style = document.createElement('dummy').style,
@@ -404,7 +405,6 @@
             triggerEvent(root, "impress:init", { api: roots[ "impress-root-" + rootId ] });
             arrow=document.querySelectorAll(".arrow");
             // activing the web-based gesture recognition
-            var imp=document.getElementById("impress");
             if( imp.classList.contains("gesture")){
                 gesture();
             };
@@ -465,7 +465,6 @@
             },el.dataset.delay? el.dataset.delay*1000 : 0, el);
             
             // compute target state of the canvas based on given step
-            console.log('next step');
             var target = {
                 rotate: {
                     x: -step.rotate.x,
@@ -654,14 +653,14 @@
             if (typeof(video) == 'undefined' || video == null){
                 video= document.createElement("video");
                 video.id="gesture-video";
-                document.body.appendChild(video);
+                imp.appendChild(video);
             };
             video.style.display="none";
             var canvas=document.getElementById('gesture-canvas');
             if (typeof(canvas) == 'undefined' || canvas == null){
                 canvas= document.createElement("canvas");
                 canvas.id="gesture-canvas";
-                document.body.appendChild(canvas);
+                imp.appendChild(canvas);
             };
             canvas.setAttribute("style","width:300px;display:none;");
             var _ =canvas.getContext('2d');
@@ -669,24 +668,26 @@
             if (typeof(ccanvas) == 'undefined' || ccanvas == null){
                 ccanvas= document.createElement("canvas");
                 ccanvas.id="gesture-comp";
-                document.body.appendChild(ccanvas);
+                imp.appendChild(ccanvas);
             };
             ccanvas.setAttribute("style","position:fixed;left:0;top:0;width:100%;height:100%;opacity:0.1;");
-            c_=ccanvas.getContext('2d');
+            var c_=ccanvas.getContext('2d');
             navigator.getMedia = (navigator.getUserMedia ||
                     navigator.webkitGetUserMedia ||
                     navigator.mozGetUserMedia ||
                     navigator.msGetUserMedia);
             navigator.getMedia({audio:true,video:true},function(stream){
-                s=stream;
+                var s=stream;
                 video.src=window.URL.createObjectURL(stream);
                 video.addEventListener('play',function(){
                     setInterval(dump,1000/25);
                 });},function(){
                 console.log('OOOOOOOH! DEEEEENIED!');
             });
-            compression=5;
-            width=height=0;
+            var compression=5;
+            var height=0;
+            var width=height;
+            var draw =null;
             function dump(){
                 if(canvas.width!=video.videoWidth){
                     width=Math.floor(video.videoWidth/compression);
@@ -700,15 +701,15 @@
                 //skinfilter();
                 test();
             }
-            huemin = 0.0;
-            huemax = 0.10;
-            satmin = 0.0;
-            satmax = 1.0;
-            valmin = 0.4;
-            valmax = 1.0;
+            var huemin = 0.0;
+            var huemax = 0.10;
+            var satmin = 0.0;
+            var satmax = 1.0;
+            var valmin = 0.4;
+            var valmax = 1.0;
             function skinfilter() {
 
-                skin_filter = _.getImageData(0, 0, width, height);
+                var skin_filter = _.getImageData(0, 0, width, height);
                 var total_pixels = skin_filter.width * skin_filter.height;
                 var index_value = total_pixels * 4;
 
@@ -718,12 +719,12 @@
                     for (var x = 0; x < width; x++)
                     {
                         index_value = x + y * width;
-                        r = draw.data[count_data_big_array];
-                        g = draw.data[count_data_big_array + 1];
-                        b = draw.data[count_data_big_array + 2];
-                        a = draw.data[count_data_big_array + 3];
+                        var r = draw.data[count_data_big_array];
+                        var g = draw.data[count_data_big_array + 1];
+                        var b = draw.data[count_data_big_array + 2];
+                        var a = draw.data[count_data_big_array + 3];
 
-                        hsv = rgb2Hsv(r, g, b);
+                        var hsv = rgb2Hsv(r, g, b);
                         //When the hand is too lose (hsv[0] > 0.59 && hsv[0] < 1.0)
 //Skin Range on HSV values
                         if (((hsv[0] > huemin && hsv[0] < huemax) || (hsv[0] > 0.59 && hsv[0] < 1.0)) && (hsv[1] > satmin && hsv[1] < satmax) && (hsv[2] > valmin && hsv[2] < valmax)) {
@@ -782,12 +783,12 @@
                 return [h, s, v];
             }
 
-            last = false;
-            thresh = 150;
-            down = false;
-            wasdown = false;
+            var last = false;
+            var thresh = 150;
+            var down = false;
+            var wasdown = false;
             function test() {
-                delt = _.createImageData(width, height);
+                var delt = _.createImageData(width, height);
                 if (last !== false) {
                     var totalx = 0, totaly = 0, totald = 0, totaln = delt.width * delt.height
                             , dscl = 0
@@ -831,9 +832,9 @@
                 last = draw;
                 c_.putImageData(delt, 0, 0);
             };
-            movethresh = 2;
-            brightthresh = 300;
-            overthresh = 1000;
+            var movethresh = 2;
+            var brightthresh = 300;
+            var overthresh = 1000;
             function calibrate() {
                 wasdown = {
                     x: down.x,
@@ -841,8 +842,8 @@
                     d: down.d
                 };
             }
-            avg = 0;
-            state = 0;//States: 0 waiting for gesture, 1 waiting for next move after gesture, 2 waiting for gesture to end
+            var avg = 0;
+            var state = 0;//States: 0 waiting for gesture, 1 waiting for next move after gesture, 2 waiting for gesture to end
             function handledown() {
                 avg = 0.9 * avg + 0.1 * down.d;
                 var davg = down.d - avg, good = davg > brightthresh;
@@ -861,7 +862,7 @@
                         break;
                     case 1://Got next move, do something based on direction
                         var dx = down.x - wasdown.x, dy = down.y - wasdown.y;
-                        var dirx = Math.abs(dy) < Math.abs(dx)//(dx,dy) is on a bowtie
+                        var dirx = Math.abs(dy) < Math.abs(dx);//(dx,dy) is on a bowtie
 //console.log(good,davg)
                         if (dx < -movethresh && dirx) {
 //console.log('right')
